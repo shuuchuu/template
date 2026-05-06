@@ -1,0 +1,65 @@
+[project]
+authors = [
+{%- for author in project_authors %}
+{{author}}
+{% endfor -%}
+]
+dependencies = []
+description = "{{project_description}}"
+homepage = "{{project_homepage}}"
+license = "{{project_license}}"
+license-files = ["LICENSE"]
+name = "{{project_name}}"
+readme = "README.md"
+requires-python = ">= 3.12"
+version = "0.1.0"
+
+[dependency-groups]
+dev = [
+{%- if 'bumpver' in tools %}
+  "bumpver >= 2025.1131",
+{%- endif %}
+{%- if 'doit' in tools %}
+  "doit >= 0.37",
+{%- endif %}
+{%- if 'pytest' in tools %}
+  "pytest >= 8",
+{%- endif %}
+  "ruff >= 0.11",
+  "ty >= 0.0.33",
+]
+
+[tool.ruff]
+target-version = "py312"
+
+[tool.ruff.lint]
+ignore = ["D1", "D203", "D213", "RUF067"]
+preview = true
+select = ["A", "B", "C", "D", "DOC", "E", "EM", "F", "I", "N", "PIE", "PTH", "RET", "RUF", "SIM", "SLF", "TC", "UP", "W"]
+
+[tool.ruff.lint.pydocstyle]
+convention = "google"
+{%- if 'bumpver' in tools %}
+
+[bumpver]
+commit = true
+tag = true
+push = true
+commit_message = "Bump version to {new_version}"
+current_version = "0.1.0"
+tag_message = "{new_version}"
+version_pattern = "MAJOR.MINOR.PATCH"
+
+[bumpver.file_patterns]
+"pyproject.toml" = [
+  '^version = "{version}"$',
+  '^current_version = "{version}"$',
+]
+"src/{{project_identifier}}/__init__.py" = [
+  '^__version__ = "{version}"$',
+]
+{%- endif %}
+
+[build-system]
+build-backend = "uv_build"
+requires = ["uv_build>=0.11,<0.12.0"]

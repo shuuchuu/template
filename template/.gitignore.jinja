@@ -1,0 +1,12 @@
+__pycache__/
+{%- if 'doit' in tools %}
+.doit.json
+{% endif -%}
+{%- if 'pytest' in tools %}
+.pytest_cache/
+{% endif -%}
+.ruff_cache/
+.venv/
+.vscode/
+dist/
+*.egg-info

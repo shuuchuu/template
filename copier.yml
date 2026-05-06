@@ -1,0 +1,43 @@
+_subdirectory: template
+
+project_authors:
+  type: str
+  multiselect: true
+  choices:
+    m09: '  {name = "m09", email = "142691+m09@users.noreply.github.com"},'
+    nyx: '  {name = "NyxAether", email = "contact.nyxhemera@gmail.com"},'
+    fmg: '  {name = "nzmonzmp", email = "36000236+nzmonzmp@users.noreply.github.com"},'
+
+project_name:
+  type: str
+  help: What is your project name (usually the name of the outer folder)?
+
+project_id:
+  type: str
+  help: What is your project identifier (what's imported in Python)?
+  default: "{% from 'project-id.jinja' import project_id %}{{ project_id(project_name) }}"
+
+project_license:
+  type: str
+  choices:
+    - GPL-3.0-or-later
+    - Apache-2.0
+
+project_homepage:
+  type: str
+  help: What is your project homepage?
+
+project_description:
+  type: str
+  help: What is your project description?
+
+tools:
+  type: str
+  help: Which tools do you want to install?
+  multiselect: true
+  choices:
+    - bumpver
+    - devcontainer
+    - doit
+    - githooks
+    - pytest

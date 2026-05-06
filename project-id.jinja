@@ -1,0 +1,20 @@
+{% macro project_id(value) %}
+{%- set ns = namespace(result='') %}
+{%- for char in value %}
+    {%- if char.isascii() and (char.isalpha() or char.isdigit()) %}
+        {%- set ns.result = ns.result ~ char.lower() %}
+    {%- else %}
+        {%- set ns.result = ns.result ~ '_' %}
+    {%- endif %}
+{%- endfor %}
+{%- for _ in ns.result %}
+    {%- set ns.result = ns.result | replace('__', '_') %}
+{%- endfor %}
+{%- set ns.result = ns.result | trim('_') %}
+{%- for _ in ns.result %}
+    {%- if ns.result[0].isdigit() %}
+        {%- set ns.result = ns.result[1:] %}
+    {%- endif %}
+{%- endfor %}
+{{- ns.result -}}
+{% endmacro %}

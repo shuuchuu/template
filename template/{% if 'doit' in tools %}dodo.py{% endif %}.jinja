@@ -10,8 +10,8 @@ def task_check():
     return {
         "actions": [
             "uv run ruff check src/{{project_identifier}}{%if 'pytest' in tools %} tests{% endif %}",
-            "uv run ruff format --check src/{{project_identifier}}{%if 'pytest' in tools %} tests{% endif %}"",
-            "uv run ty check src/{{project_identifier}}{%if 'pytest' in tools %} tests{% endif %}"",
+            "uv run ruff format --check src/{{project_identifier}}{%if 'pytest' in tools %} tests{% endif %}",
+            "uv run ty check src/{{project_identifier}}{%if 'pytest' in tools %} tests{% endif %}",
         ],
     }
 {%- if 'pytest' in tools %}

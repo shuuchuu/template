@@ -56,11 +56,15 @@ version_pattern = "MAJOR.MINOR.PATCH"
   '^version = "{version}"$',
   '^current_version = "{version}"$',
 ]
+{%- if project_layout == 'package' %}
 "src/{{project_id}}/__init__.py" = [
   '^__version__ = "{version}"$',
 ]
 {%- endif %}
+{%- endif %}
+{%- if project_layout == 'package' %}
 
 [build-system]
 build-backend = "uv_build"
 requires = ["uv_build>=0.12.15,<0.13.0"]
+{%- endif %}

@@ -6,12 +6,19 @@ DOIT_CONFIG = {
 }
 
 
+{%- if project_layout == 'package' %}
+{%- set check_paths = 'src/' ~ project_id ~ (' tests' if 'pytest' in tools else '') %}
+{%- else %}
+{%- set check_paths = '.' %}
+{%- endif %}
+
+
 def task_check():
     return {
         "actions": [
-            "uv run ruff check src/{{project_id}}{%if 'pytest' in tools %} tests{% endif %}",
-            "uv run ruff format --check src/{{project_id}}{%if 'pytest' in tools %} tests{% endif %}",
-            "uv run ty check src/{{project_id}}{%if 'pytest' in tools %} tests{% endif %}",
+            "uv run ruff check {{ check_paths }}",
+            "uv run ruff format --check {{ check_paths }}",
+            "uv run ty check {{ check_paths }}",
         ],
     }
 {%- if 'pytest' in tools %}

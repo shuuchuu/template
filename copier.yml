@@ -1,38 +1,67 @@
 _subdirectory: template
 
-project_authors:
-  type: str
-  multiselect: true
-  choices:
-    m09: '  {name = "m09", email = "142691+m09@users.noreply.github.com"},'
-    nyx: '  {name = "NyxAether", email = "contact.nyxhemera@gmail.com"},'
-    fmg: '  {name = "nzmonzmp", email = "36000236+nzmonzmp@users.noreply.github.com"},'
+# Only keep the pieces of the template that the chosen layout manages. The
+# default() matters: Copier also applies these rules when rendering a
+# project's previous template version, where project_layout may not exist.
+_exclude:
+  - |
+    {%- if project_layout | default('package') != 'package' %}
+    src/
+    {%- endif %}
+    {%- if project_layout | default('package') == 'bare' %}
+    *
+    !.python-version
+    !{{ _copier_conf.answers_file }}
+    {%- endif %}
 
 project_name:
   type: str
   help: What is your project name (usually the name of the outer folder)?
 
+project_layout:
+  type: str
+  help: Which parts of the template should this project use?
+  default: package
+  choices:
+    "package: a src/ package built with uv_build": package
+    "scripts: managed pyproject.toml and dev tooling, no build system": scripts
+    "bare: only pin the Python version": bare
+
+project_authors:
+  type: str
+  multiselect: true
+  when: "{{ project_layout != 'bare' }}"
+  choices:
+    m09: '  {name = "m09", email = "142691+m09@users.noreply.github.com"},'
+    nyx: '  {name = "NyxAether", email = "contact.nyxhemera@gmail.com"},'
+    fmg: '  {name = "nzmonzmp", email = "36000236+nzmonzmp@users.noreply.github.com"},'
+
 project_id:
   type: str
   help: What is your project identifier (what's imported in Python)?
+  when: "{{ project_layout == 'package' }}"
   default: "{% from 'project-id.jinja' import project_id %}{{ project_id(project_name) }}"
 
 project_license:
   type: str
+  when: "{{ project_layout != 'bare' }}"
   choices:
     - GPL-3.0-or-later
     - Apache-2.0
 
 project_homepage:
   type: str
+  when: "{{ project_layout != 'bare' }}"
   help: What is your project homepage?
 
 project_description:
   type: str
+  when: "{{ project_layout != 'bare' }}"
   help: What is your project description?
 
 tools:
   type: str
+  when: "{{ project_layout != 'bare' }}"
   help: Which tools do you want to install?
   multiselect: true
   choices:

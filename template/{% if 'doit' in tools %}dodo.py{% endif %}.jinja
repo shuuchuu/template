@@ -30,7 +30,7 @@ def task_test():
             "uv run pytest",
         ],
     }
-{% endif -%}
+{%- endif %}
 {%- if 'githooks' in tools %}
 
 
@@ -43,4 +43,4 @@ def task_install_hooks():
     return {
         "actions": actions,
     }
-{% endif -%}
+{%- endif %}

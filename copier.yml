@@ -70,3 +70,5 @@ tools:
     - doit
     - githooks
     - pytest
+  validator: >-
+    {% if 'githooks' in tools and 'doit' not in tools %}githooks runs doit check, so it needs doit{% endif %}

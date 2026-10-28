@@ -25,11 +25,11 @@ dev = [
 {%- if 'githooks' in tools %}
   "prek >= 0.5.7",
 {%- endif %}
+  "pyrefly >= 1.4",
 {%- if 'pytest' in tools %}
   "pytest >= 9",
 {%- endif %}
   "ruff >= 0.17",
-  "ty >= 0.0.94",
 ]
 
 [tool.ruff]
@@ -47,6 +47,12 @@ select = ["A", "B", "C", "D", "DOC", "E", "EM", "F", "I", "N", "PIE", "PTH", "RE
 
 [tool.ruff.lint.pydocstyle]
 convention = "google"
+
+# Without a config, pyrefly falls back to its lenient "basic" preset. With one,
+# it stops treating the project root as an import root, so tests couldn't
+# import tests.conftest without search-path.
+[tool.pyrefly]
+search-path = ["."]
 {%- if 'bumpver' in tools %}
 
 [bumpver]

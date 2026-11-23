@@ -57,7 +57,7 @@ convention = "google"
 search-path = ["."]
 {%- if 'bumpver' in tools %}
 
-[bumpver]
+[tool.bumpver]
 commit = true
 tag = true
 push = true
@@ -67,7 +67,7 @@ pre_commit_hook = "scripts/bumpver_pre_commit.sh"
 tag_message = "{new_version}"
 version_pattern = "MAJOR.MINOR.PATCH"
 
-[bumpver.file_patterns]
+[tool.bumpver.file_patterns]
 "pyproject.toml" = [
   '^version = "{version}"$',
   '^current_version = "{version}"$',

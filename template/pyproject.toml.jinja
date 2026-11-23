@@ -5,7 +5,7 @@ authors = [
 {%- endfor %}
 ]
 dependencies = []
-description = "{{project_description}}"
+description = "{{project_description | replace('\\', '\\\\') | replace('"', '\\"')}}"
 license = "{{project_license}}"
 license-files = ["LICENSE"]
 name = "{{project_name}}"

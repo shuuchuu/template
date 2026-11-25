@@ -52,7 +52,8 @@ project_license:
 project_homepage:
   type: str
   when: "{{ project_layout != 'bare' }}"
-  help: What is your project homepage?
+  help: What is your project homepage (leave empty if it has no public one)?
+  default: ""
 
 project_description:
   type: str
